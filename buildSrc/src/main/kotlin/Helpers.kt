@@ -8,8 +8,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 import java.util.Locale
 
-const val lifecycleVersion = "2.8.7"
-
 private val Project.android get() = extensions.getByName<BaseExtension>("android")
 private val BaseExtension.lint get() = (this as CommonExtension<*, *, *, *, *, *>).lint
 
@@ -23,7 +21,7 @@ val Project.currentFlavor get() = gradle.startParameter.taskRequests.toString().
 fun Project.setupCommon() {
     val javaVersion = JavaVersion.VERSION_11
     android.apply {
-        compileSdkVersion(35)
+        compileSdkVersion(36)
         defaultConfig {
             minSdk = 23
             targetSdk = 35
@@ -42,12 +40,6 @@ fun Project.setupCommon() {
     }
     extensions.getByName<KotlinAndroidProjectExtension>("kotlin").compilerOptions.jvmTarget
         .set(JvmTarget.fromTarget(javaVersion.toString()))
-
-    dependencies {
-        add("testImplementation", "junit:junit:4.13.2")
-        add("androidTestImplementation", "androidx.test:runner:1.6.2")
-        add("androidTestImplementation", "androidx.test.espresso:espresso-core:3.6.1")
-    }
 }
 
 fun Project.setupCore() {
@@ -64,9 +56,7 @@ fun Project.setupCore() {
             disable += "UseAppTint"
         }
         buildFeatures.buildConfig = true
-        ndkVersion = "27.2.12479018"
     }
-    dependencies.add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:2.1.2")
 }
 
 fun Project.setupApp() {
@@ -90,6 +80,7 @@ fun Project.setupApp() {
         buildTypes {
             getByName("debug") {
                 isPseudoLocalesEnabled = true
+                packagingOptions.doNotStrip("**/libsslocal.so")
             }
             getByName("release") {
                 isShrinkResources = true
