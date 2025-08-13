@@ -14,8 +14,16 @@ buildscript {
         gradlePluginPortal()
     }
 
+    val rn = the<VersionCatalogsExtension>().find("ssalibs")
+
     dependencies {
-        classpath(libs.android.gradle)
+        rn.ifPresentOrElse({
+            println("YESSSSSSS")
+            classpath(it.findLibrary("android-gradle-plugin").get())
+        },{
+            classpath(libs.android.gradle)
+        })
+        //classpath(libs.android.gradle)
         classpath(libs.dokka)
         classpath(libs.firebase.crashlytics.gradle)
         classpath(libs.google.oss.licenses)
