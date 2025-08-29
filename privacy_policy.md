@@ -17,12 +17,10 @@ The app does use third party services that may collect information used to ident
 Link to privacy policy of third party service providers used by the app
 
 *   [Google Play Services](https://www.google.com/policies/privacy/)
-*   [AdMob](https://support.google.com/admob/answer/6128543?hl=en)
-*   [Firebase Analytics](https://firebase.google.com/policies/analytics)
 
 **Log Data**
 
-We want to inform you that whenever you use our app, in a case of an error in the app we collect data and information (through third party products) on your phone called Log Data. This Log Data may include information such as your device Internet Protocol (“IP”) address, device name, operating system version, the configuration of the app when utilizing our App, the time and date of your use of the app, and other statistics.
+We want to inform you that whenever you use our app, in a case of an error in the app we may collect basic log data for debugging purposes. This Log Data may include information such as device name, operating system version, the configuration of the app when utilizing our App, and the time and date of your use of the app.
 
 **Cookies**
 

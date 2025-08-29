@@ -25,9 +25,7 @@ buildscript {
         })
         //classpath(libs.android.gradle)
         classpath(libs.dokka)
-        classpath(libs.firebase.crashlytics.gradle)
         classpath(libs.google.oss.licenses)
-        classpath(libs.google.services)
         classpath(libs.gradle.maven.publish)
         classpath(libs.kotlin.gradle)
         classpath(libs.rust.android)
@@ -40,9 +38,4 @@ allprojects {
     version = "5.3.4"
 }
 
-// skip uploading the mapping to Crashlytics
-subprojects {
-    tasks.whenTaskAdded {
-        if (name.contains("uploadCrashlyticsMappingFile")) enabled = false
-    }
-}
+

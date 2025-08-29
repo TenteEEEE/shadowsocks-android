@@ -68,7 +68,6 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.Shadowsocks.Immersive.Navigation"
             android:launchMode="singleTask"
-            android:screenOrientation="locked"
             android:excludeFromRecents="true"/>
 
         <activity
@@ -120,8 +119,6 @@
             </intent-filter>
         </receiver>
 
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3283768469187309~3571758745"/>
+
     </application>
 </manifest>

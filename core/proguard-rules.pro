@@ -22,6 +22,10 @@
 -dontwarn org.xbill.DNS.spi.DnsjavaInetAddressResolverProvider
 -dontwarn sun.net.spi.nameservice.NameServiceDescriptor
 
+# Android 16 compatibility
+-keep class android.app.compat.CompatChanges { *; }
+-keep class android.content.pm.PackageManager$Property { *; }
+
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
