@@ -55,7 +55,7 @@ import me.zhanghai.android.fastscroll.FastScrollerBuilder
 import java.net.MalformedURLException
 import java.net.URL
 
-class SubscriptionFragment : ToolbarFragment(), Toolbar.OnMenuItemClickListener {
+class SubscriptionFragment : ToolbarFragment() { // , Toolbar.OnMenuItemClickListener { // ローカルアプリでは無効化
     @Parcelize
     data class SubItem(val item: String? = null) : Parcelable
 
@@ -217,11 +217,12 @@ class SubscriptionFragment : ToolbarFragment(), Toolbar.OnMenuItemClickListener 
             if (edited != null) adapter.add(URL(edited)).also { list.post { list.scrollToPosition(it) } }
         }
         toolbar.setTitle(R.string.subscriptions)
-        toolbar.inflateMenu(R.menu.subscription_menu)
-        toolbar.setOnMenuItemClickListener(this)
-        SubscriptionService.idle.observe(viewLifecycleOwner) {
-            toolbar.menu.findItem(R.id.action_update_subscription).isEnabled = it
-        }
+        // Subscription機能をローカルアプリでは無効化
+        // toolbar.inflateMenu(R.menu.subscription_menu)
+        // toolbar.setOnMenuItemClickListener(this)
+        // SubscriptionService.idle.observe(viewLifecycleOwner) {
+        //     toolbar.menu.findItem(R.id.action_update_subscription).isEnabled = it
+        // }
         val activity = activity as MainActivity
         list = view.findViewById(R.id.list)
         ViewCompat.setOnApplyWindowInsetsListener(list, MainListListener)
@@ -239,6 +240,8 @@ class SubscriptionFragment : ToolbarFragment(), Toolbar.OnMenuItemClickListener 
         }).attachToRecyclerView(list)
     }
 
+    // ローカルアプリではSubscription機能を無効化
+    /*
     override fun onMenuItemClick(item: MenuItem): Boolean = when (item.itemId) {
         R.id.action_manual_settings -> {
             SubDialogFragment().apply {
@@ -247,13 +250,14 @@ class SubscriptionFragment : ToolbarFragment(), Toolbar.OnMenuItemClickListener 
             }.show(parentFragmentManager, null)
             true
         }
-        R.id.action_update_subscription -> {
-            val context = requireContext()
-            context.startService(Intent(context, SubscriptionService::class.java))
-            true
-        }
+        // R.id.action_update_subscription -> { // ローカルアプリでは無効化
+        //     val context = requireContext()
+        //     context.startService(Intent(context, SubscriptionService::class.java))
+        //     true
+        // }
         else -> false
     }
+    */
 
     override fun onDetach() {
         undoManager.flush()

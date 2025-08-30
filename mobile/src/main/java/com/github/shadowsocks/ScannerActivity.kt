@@ -152,14 +152,15 @@ class ScannerActivity : AppCompatActivity(), ImageAnalysis.Analyzer, ZoomSuggest
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.scanner_menu, menu)
+        // QRスキャナーメニューをローカルアプリでは削除
+        // menuInflater.inflate(R.menu.scanner_menu, menu)
         return true
     }
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        R.id.action_import_clipboard -> {
-            startImport(true)
-            true
-        }
+        // R.id.action_import_clipboard -> { // QRスキャナーメニューをローカルアプリでは削除
+        //     startImport(true)
+        //     true
+        // }
         else -> false
     }
 

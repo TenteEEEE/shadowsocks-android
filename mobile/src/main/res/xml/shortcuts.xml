@@ -8,6 +8,7 @@
                 android:targetPackage="com.github.shadowsocks"
                 android:targetClass="com.github.shadowsocks.QuickToggleShortcut" />
     </shortcut>
+    <!-- QRスキャナーショートカットをローカルアプリでは削除
     <shortcut android:shortcutId="scan"
               android:icon="@drawable/ic_qu_camera_launcher"
               android:shortcutShortLabel="@string/add_profile_methods_scan_qr_code"
@@ -16,4 +17,5 @@
                 android:targetPackage="com.github.shadowsocks"
                 android:targetClass="com.github.shadowsocks.ScannerActivity" />
     </shortcut>
+    -->
 </shortcuts>
