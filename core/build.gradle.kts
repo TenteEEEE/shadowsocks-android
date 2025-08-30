@@ -143,8 +143,6 @@ cargo {
     targets = listOf("arm", "arm64", "x86", "x86_64")
     profile = findProperty("CARGO_PROFILE")?.toString() ?: currentFlavor
     extraCargoBuildArguments = listOf("--bin", libname!!)
-    // インクリメンタルビルドを無効化してファイルアクセス競合を回避
-    //environment.put("CARGO_INCREMENTAL", "0")
     featureSpec.noDefaultBut(arrayOf(
         "stream-cipher",
         "aead-cipher-extra",
@@ -210,9 +208,7 @@ dependencies {
     api(libs.dnsjava)
     api(libs.kotlinx.coroutines.android)
     api(libs.material)
-    // api(libs.play.services.oss.licenses) // ローカルアプリでは不要
     api(libs.timber)
-    // Firebase関連は完全削除済
     coreLibraryDesugaring(libs.desugar)
     ksp(libs.androidx.room.compiler)
     testImplementation(libs.junit)
