@@ -80,69 +80,9 @@ class SubscriptionService : Service(), CoroutineScope {
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        // ローカルアプリでは外部サーバーからのSubscription更新を無効化
         Timber.i("Subscription service disabled for local app")
         stopSelf(startId)
         return START_NOT_STICKY
-        
-        /*
-        if (worker == null) {
-            idle.value = false
-            if (!receiverRegistered) {
-                ContextCompat.registerReceiver(this, cancelReceiver, IntentFilter(Action.ABORT),
-                    ContextCompat.RECEIVER_NOT_EXPORTED)
-                receiverRegistered = true
-            }
-            worker = launch {
-                val urls = Subscription.instance.urls
-                val notification = NotificationCompat.Builder(this@SubscriptionService, NOTIFICATION_CHANNEL).apply {
-                    color = ContextCompat.getColor(this@SubscriptionService, R.color.material_primary_500)
-                    priority = NotificationCompat.PRIORITY_LOW
-                    addAction(NotificationCompat.Action.Builder(
-                            R.drawable.ic_navigation_close,
-                            getText(R.string.stop),
-                            PendingIntent.getBroadcast(this@SubscriptionService, 0,
-                                    Intent(Action.ABORT).setPackage(packageName), PendingIntent.FLAG_IMMUTABLE)).apply {
-                        setShowsUserInterface(false)
-                    }.build())
-                    setCategory(NotificationCompat.CATEGORY_PROGRESS)
-                    setContentTitle(getString(R.string.service_subscription_working, 0, urls.size()))
-                    setOngoing(true)
-                    setProgress(urls.size(), 0, false)
-                    setSmallIcon(R.drawable.ic_file_cloud_download)
-                    setWhen(0)
-                }
-                Core.notification.notify(NOTIFICATION_ID, notification.build())
-                counter = 0
-                val workers = urls.asIterable().map { url -> fetchJsonAsync(url, urls.size(), notification) }
-                try {
-                    val localJsons = workers.awaitAll()
-                    withContext(Dispatchers.Main) {
-                        Core.notification.notify(NOTIFICATION_ID, notification.apply {
-                            setContentTitle(getText(R.string.service_subscription_finishing))
-                            setProgress(0, 0, true)
-                        }.build())
-                        createProfilesFromSubscription(localJsons.asSequence().filterNotNull().map { it.inputStream() })
-                    }
-                } finally {
-                    for (worker in workers) {
-                        worker.cancel()
-                        try {
-                            worker.getCompleted()?.apply { if (!delete()) deleteOnExit() }
-                        } catch (_: Exception) { }
-                    }
-                    GlobalScope.launch(Dispatchers.Main) {
-                        Core.notification.cancel(NOTIFICATION_ID)
-                        idle.value = true
-                    }
-                    check(worker != null)
-                    worker = null
-                    stopSelf(startId)
-                }
-            }
-        } else stopSelf(startId)
-        return START_NOT_STICKY
-        */
     }
 
     private fun fetchJsonAsync(url: URL, max: Int, notification: NotificationCompat.Builder) = async(Dispatchers.IO) {
