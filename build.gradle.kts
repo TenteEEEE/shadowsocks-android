@@ -25,7 +25,8 @@ buildscript {
         })
         //classpath(libs.android.gradle)
         classpath(libs.dokka)
-        classpath(libs.google.oss.licenses)
+        // classpath(libs.google.oss.licenses) // ローカルアプリでは不要
+        // Google Services - ローカルアプリでは不要
         classpath(libs.gradle.maven.publish)
         classpath(libs.kotlin.gradle)
         classpath(libs.rust.android)

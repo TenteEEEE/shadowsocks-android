@@ -36,7 +36,7 @@ import androidx.core.text.parseAsHtml
 import androidx.core.view.ViewCompat
 import com.github.shadowsocks.widget.ListHolderListener
 import com.github.shadowsocks.widget.MainListListener
-import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+// import com.google.android.gms.oss.licenses.OssLicensesMenuActivity // ローカルアプリでは不要
 
 class AboutFragment : ToolbarFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
@@ -54,7 +54,8 @@ class AboutFragment : ToolbarFragment() {
                     setSpan(object : ClickableSpan() {
                         override fun onClick(view: View) = when {
                             span.url.startsWith("#") -> {
-                                startActivity(Intent(context, OssLicensesMenuActivity::class.java))
+                                // OSS Licenses機能をローカルアプリでは無効化
+                                // startActivity(Intent(context, OssLicensesMenuActivity::class.java))
                             }
                             span.url.startsWith("mailto:") -> {
                                 startActivity(Intent.createChooser(Intent().apply {

@@ -43,7 +43,7 @@ import com.github.shadowsocks.preference.DataStore
 import com.github.shadowsocks.preference.EditTextPreferenceModifiers
 import com.github.shadowsocks.preference.OnPreferenceDataStoreChangeListener
 import com.github.shadowsocks.utils.*
-import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+// import com.google.android.gms.oss.licenses.OssLicensesMenuActivity // ローカルアプリでは不要
 import timber.log.Timber
 
 class MainPreferenceFragment : LeanbackPreferenceFragmentCompat(), ShadowsocksConnection.Callback,
@@ -207,7 +207,8 @@ class MainPreferenceFragment : LeanbackPreferenceFragmentCompat(), ShadowsocksCo
             true
         }
         Key.aboutOss -> {
-            startActivity(Intent(context, OssLicensesMenuActivity::class.java))
+            // OSS Licenses機能をローカルアプリでは無効化
+            // startActivity(Intent(context, OssLicensesMenuActivity::class.java))
             true
         }
         else -> super.onPreferenceTreeClick(preference)

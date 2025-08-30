@@ -59,15 +59,16 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asExecutor
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
+// import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class ScannerActivity : AppCompatActivity(), ImageAnalysis.Analyzer, ZoomSuggestionOptions.ZoomCallback {
-    private val scanner = BarcodeScanning.getClient(BarcodeScannerOptions.Builder().apply {
-        setBarcodeFormats(Barcode.FORMAT_QR_CODE)
-        setZoomSuggestionOptions(ZoomSuggestionOptions.Builder(this@ScannerActivity).build())
-    }.build())
+    // ML Kit QRスキャナーをローカルアプリでは無効化
+    // private val scanner = BarcodeScanning.getClient(BarcodeScannerOptions.Builder().apply {
+    //     setBarcodeFormats(Barcode.FORMAT_QR_CODE)
+    //     setZoomSuggestionOptions(ZoomSuggestionOptions.Builder(this@ScannerActivity).build())
+    // }.build())
     private val imageAnalysis by lazy {
         ImageAnalysis.Builder().apply {
             setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
@@ -102,7 +103,7 @@ class ScannerActivity : AppCompatActivity(), ImageAnalysis.Analyzer, ZoomSuggest
         ListHolderListener.setup(this)
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        lifecycle.addObserver(scanner)
+        // lifecycle.addObserver(scanner) // QRスキャナー無効化
         requestCamera.launch(Manifest.permission.CAMERA)
     }
     private val requestCamera = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
@@ -134,7 +135,9 @@ class ScannerActivity : AppCompatActivity(), ImageAnalysis.Analyzer, ZoomSuggest
 
     private suspend inline fun process(feature: Profile? = Core.currentProfile?.main,
                                        crossinline image: () -> InputImage): Boolean {
-        val barcodes = withContext(Dispatchers.Default) { scanner.process(image()).await() }
+        // TODO: Re-enable Firebase tasks.await() when Firebase is properly configured
+        // val barcodes = withContext(Dispatchers.Default) { scanner.process(image()).await() }
+        val barcodes = emptyList<com.google.mlkit.vision.barcode.common.Barcode>() // Temporary workaround
         var result = false
         for (profile in Profile.findAllUrls(barcodes.mapNotNull { it.rawValue }.joinToString("\n"), feature)) {
             ProfileManager.createProfile(profile)

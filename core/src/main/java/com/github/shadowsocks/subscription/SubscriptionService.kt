@@ -80,6 +80,12 @@ class SubscriptionService : Service(), CoroutineScope {
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        // ローカルアプリでは外部サーバーからのSubscription更新を無効化
+        Timber.i("Subscription service disabled for local app")
+        stopSelf(startId)
+        return START_NOT_STICKY
+        
+        /*
         if (worker == null) {
             idle.value = false
             if (!receiverRegistered) {
@@ -136,6 +142,7 @@ class SubscriptionService : Service(), CoroutineScope {
             }
         } else stopSelf(startId)
         return START_NOT_STICKY
+        */
     }
 
     private fun fetchJsonAsync(url: URL, max: Int, notification: NotificationCompat.Builder) = async(Dispatchers.IO) {

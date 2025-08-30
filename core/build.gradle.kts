@@ -210,8 +210,9 @@ dependencies {
     api(libs.dnsjava)
     api(libs.kotlinx.coroutines.android)
     api(libs.material)
-    api(libs.play.services.oss.licenses)
+    // api(libs.play.services.oss.licenses) // ローカルアプリでは不要
     api(libs.timber)
+    // Firebase関連は完全削除済
     coreLibraryDesugaring(libs.desugar)
     ksp(libs.androidx.room.compiler)
     testImplementation(libs.junit)
