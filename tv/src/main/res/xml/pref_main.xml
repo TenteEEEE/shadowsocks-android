@@ -53,11 +53,6 @@
     <Preference
         app:key="about"
         app:title="@string/about"/>
-    <!-- OSS Licenses機能をローカルアプリでは削除
-    <Preference
-        app:key="about.ossLicenses"
-        app:title="@string/oss_license_title"
-        app:summary="@string/preferences_license_summary"/>
-    -->
+
 
 </PreferenceScreen>

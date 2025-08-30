@@ -45,7 +45,6 @@ import com.github.shadowsocks.aidl.TrafficStats
 import com.github.shadowsocks.bg.BaseService
 import com.github.shadowsocks.preference.DataStore
 import com.github.shadowsocks.preference.OnPreferenceDataStoreChangeListener
-// import com.github.shadowsocks.subscription.SubscriptionFragment // ローカルアプリでは不要
 import com.github.shadowsocks.utils.Key
 import com.github.shadowsocks.utils.StartService
 import com.github.shadowsocks.widget.ListHolderListener
@@ -53,9 +52,6 @@ import com.github.shadowsocks.widget.ServiceButton
 import com.github.shadowsocks.widget.StatsBar
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
-// import com.google.firebase.analytics.ktx.analytics
-// import com.google.firebase.analytics.logEvent
-// import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity(), ShadowsocksConnection.Callback, OnPreferenceDataStoreChangeListener,
         NavigationView.OnNavigationItemSelectedListener {
@@ -204,7 +200,6 @@ class MainActivity : AppCompatActivity(), ShadowsocksConnection.Callback, OnPref
                 }
                 R.id.globalSettings -> displayFragment(GlobalSettingsFragment())
                 R.id.about -> {
-                    // Firebase.analytics.logEvent("about") { }
                     displayFragment(AboutFragment())
                 }
                 R.id.faq -> {
@@ -212,7 +207,6 @@ class MainActivity : AppCompatActivity(), ShadowsocksConnection.Callback, OnPref
                     return true
                 }
                 R.id.customRules -> displayFragment(CustomRulesFragment())
-                // R.id.subscriptions -> displayFragment(SubscriptionFragment()) // ローカルアプリでは削除
                 else -> return false
             }
             item.isChecked = true
