@@ -15,7 +15,7 @@ android {
 dependencies {
     coreLibraryDesugaring(libs.desugar)
     api(libs.androidx.core.ktx)
-    api("androidx.fragment:fragment-ktx:1.5.5")
+    api(libs.androidx.fragment.ktx)
     api(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.runner)

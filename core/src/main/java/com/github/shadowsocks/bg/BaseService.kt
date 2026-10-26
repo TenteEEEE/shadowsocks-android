@@ -29,6 +29,7 @@ import android.os.IBinder
 import android.os.RemoteCallbackList
 import android.os.RemoteException
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import com.github.shadowsocks.BootReceiver
 import com.github.shadowsocks.Core
 import com.github.shadowsocks.Core.app
