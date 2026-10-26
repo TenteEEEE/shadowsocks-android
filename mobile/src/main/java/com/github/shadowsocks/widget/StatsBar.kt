@@ -53,13 +53,13 @@ class StatsBar @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
         return behavior
     }
 
-    override fun setOnClickListener(l: OnClickListener?) {
+    override fun onFinishInflate() {
+        super.onFinishInflate()
         statusText = findViewById(R.id.status)
         txText = findViewById(R.id.tx)
         txRateText = findViewById(R.id.txRate)
         rxText = findViewById(R.id.rx)
         rxRateText = findViewById(R.id.rxRate)
-        super.setOnClickListener(l)
     }
 
     private fun setStatus(text: CharSequence) {
