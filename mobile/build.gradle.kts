@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -16,11 +18,11 @@ android {
         .get()
     val keystorePropertiesFile = file(keystorePropertiesPath)
     if (keystorePropertiesFile.isFile) {
-        val keystoreProperties = java.util.Properties().apply {
+        val keystoreProperties = Properties().apply {
             keystorePropertiesFile.inputStream().use { load(it) }
         }
         signingConfigs.create("release") {
-            val storePath = keystoreProperties.getProperty("storeFile")
+            val storePath: String = keystoreProperties.getProperty("storeFile")
             storeFile = (if (File(storePath).isAbsolute) File(storePath)
                 else File(keystorePropertiesFile.parentFile, storePath))
             storePassword = keystoreProperties.getProperty("storePassword")
