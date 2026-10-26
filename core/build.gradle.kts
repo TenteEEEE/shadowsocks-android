@@ -210,8 +210,6 @@ dependencies {
     api(libs.androidx.lifecycle.livedata.core.ktx)
     api(libs.androidx.preference)
     api(libs.androidx.room.runtime)
-    api(libs.androidx.work.multiprocess)
-    api(libs.androidx.work.runtime.ktx)
     api(libs.dnsjava)
     api(libs.kotlinx.coroutines.android)
     api(libs.material)

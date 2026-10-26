@@ -116,7 +116,7 @@
 
     <!-- status -->
     <string name="connecting">"Соединение…"</string>
-    <string name="vpn_connected">"Подключено, нажмите для проверки соединения"</string>
+    <string name="vpn_connected">"Подключено"</string>
     <string name="not_connected">"Не подключено"</string>
 
     <!-- acl -->

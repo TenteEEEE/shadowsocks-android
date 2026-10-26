@@ -18,11 +18,7 @@ All app data, including your proxy configurations and preferences, are stored lo
 
 **Network Connections**
 
-The app may make the following network connections for functionality purposes only:
-
-*   **Connection Testing**: The app may connect to `cp.cloudflare.com` to test your proxy connection. This is a simple connectivity check and no personal information is transmitted.
-*   **Rule Updates**: The app may download updated proxy rules from `shadowsocks.org` to improve functionality. No personal information is sent during these updates.
-*   **User-Configured Subscriptions**: If you choose to use subscription services, the app will connect to URLs you specify to download proxy configurations. We do not control or monitor these connections.
+The app connects to the configured Shadowsocks proxy server to provide proxy service. It does not fetch subscriptions, remote ACL rules, or perform separate connectivity tests.
 
 **Log Data**
 

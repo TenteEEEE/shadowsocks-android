@@ -34,9 +34,7 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.io.Reader
-import java.net.HttpURLConnection
 import java.net.URL
-import java.net.URLConnection
 import kotlin.coroutines.coroutineContext
 
 class Acl {
@@ -151,22 +149,11 @@ class Acl {
         fromReader(getFile(id).bufferedReader())
     } catch (_: IOException) { this }
 
-    suspend fun flatten(depth: Int, connect: suspend (URL) -> URLConnection): Acl {
-        if (depth > 0) for (url in urls.asIterable()) {
-            val child = Acl().fromReader(connect(url).also {
-                (it as? HttpURLConnection)?.instanceFollowRedirects = true
-            }.getInputStream().bufferedReader(), bypass)
-            child.flatten(depth - 1, connect)
-            if (bypass != child.bypass) {
-                Timber.w("Imported network ACL has a conflicting mode set. " +
-                        "This will probably not work as intended. URL: $url")
-                child.subnets.clear() // subnets for the different mode are discarded
-                child.bypass = bypass
-            }
-            for (item in child.bypassHostnames.asIterable()) bypassHostnames.add(item)
-            for (item in child.proxyHostnames.asIterable()) proxyHostnames.add(item)
-            for (item in child.subnets.asIterable()) subnets.add(item)
-        }
+    /**
+     * Network ACL imports are never fetched in this build; IMPORT_URL entries are dropped.
+     */
+    fun flatten(): Acl {
+        if (urls.size() > 0) Timber.w("Ignoring ${urls.size()} network ACL import(s): remote fetching is disabled")
         urls.clear()
         return this
     }

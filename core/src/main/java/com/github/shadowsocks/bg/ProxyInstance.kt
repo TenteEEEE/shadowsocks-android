@@ -24,7 +24,6 @@ import android.content.Context
 import android.util.Base64
 import com.github.shadowsocks.Core.app
 import com.github.shadowsocks.acl.Acl
-import com.github.shadowsocks.acl.AclSyncer
 import com.github.shadowsocks.core.R
 import com.github.shadowsocks.database.Profile
 import com.github.shadowsocks.plugin.PluginConfiguration
@@ -132,7 +131,6 @@ class ProxyInstance(val profile: Profile, private val route: String = profile.ro
     }
 
     fun scheduleUpdate() {
-        if (route !in arrayOf(Acl.ALL, Acl.CUSTOM_RULES)) AclSyncer.schedule(route)
     }
 
     fun shutdown(scope: CoroutineScope) {

@@ -113,7 +113,7 @@
 
     <!-- status -->
     <string name="connecting">"连接中…"</string>
-    <string name="vpn_connected">"已连接，点击测试连接"</string>
+    <string name="vpn_connected">"已连接"</string>
     <string name="not_connected">"未连接"</string>
 
     <!-- acl -->

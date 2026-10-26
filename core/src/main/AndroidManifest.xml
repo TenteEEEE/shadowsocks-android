@@ -78,10 +78,6 @@
                 android:value="Proxy service that handles incoming SOCKS5 traffic" />
         </service>
 
-        <service
-            android:name="com.github.shadowsocks.subscription.SubscriptionService"
-            android:exported="false">
-        </service>
 
         <!--<activity
             android:name="com.github.shadowsocks.UrlImportActivity"
@@ -115,10 +111,6 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
-                  android:theme="@style/Theme.Shadowsocks.ActionBar"/>
-        <activity android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
-                  android:theme="@style/Theme.Shadowsocks.ActionBar"/>
 
         <service android:name="androidx.room.MultiInstanceInvalidationService"
                  android:process=":bg"/>

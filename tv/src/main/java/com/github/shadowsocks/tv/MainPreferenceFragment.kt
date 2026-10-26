@@ -28,7 +28,6 @@ import android.text.format.Formatter
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.setFragmentResultListener
-import androidx.fragment.app.viewModels
 import androidx.leanback.preference.LeanbackPreferenceFragmentCompat
 import androidx.preference.*
 import com.github.shadowsocks.BootReceiver
@@ -38,7 +37,6 @@ import com.github.shadowsocks.aidl.ShadowsocksConnection
 import com.github.shadowsocks.aidl.TrafficStats
 import com.github.shadowsocks.bg.BaseService
 import com.github.shadowsocks.database.ProfileManager
-import com.github.shadowsocks.net.HttpsTest
 import com.github.shadowsocks.preference.DataStore
 import com.github.shadowsocks.preference.EditTextPreferenceModifiers
 import com.github.shadowsocks.preference.OnPreferenceDataStoreChangeListener
@@ -60,7 +58,6 @@ class MainPreferenceFragment : LeanbackPreferenceFragmentCompat(), ShadowsocksCo
         portTransproxy.isEnabled = newValue as String? == Key.modeTransproxy
         true
     }
-    private val tester by viewModels<HttpsTest>()
 
     // service
     var state = BaseService.State.Idle
@@ -85,13 +82,10 @@ class MainPreferenceFragment : LeanbackPreferenceFragmentCompat(), ShadowsocksCo
             BaseService.State.Stopping -> R.string.stopping
             else -> R.string.connect
         })
-        stats.setTitle(R.string.connection_test_pending)
-        if ((state == BaseService.State.Connected).also { stats.isVisible = it }) tester.status.observe(this) {
-            it.retrieve(stats::setTitle) { msg -> Toast.makeText(context, msg, Toast.LENGTH_LONG).show() }
-        } else {
+        stats.setTitle(R.string.traffic)
+        stats.isVisible = state == BaseService.State.Connected
+        if (!stats.isVisible) {
             trafficUpdated(0, TrafficStats())
-            tester.status.removeObservers(this)
-            if (state != BaseService.State.Idle) tester.invalidate()
         }
         if (msg != null) Toast.makeText(context, getString(R.string.vpn_error, msg), Toast.LENGTH_SHORT).show()
         this.state = state
@@ -190,10 +184,6 @@ class MainPreferenceFragment : LeanbackPreferenceFragmentCompat(), ShadowsocksCo
             if (state == BaseService.State.Connected) Core.stopService()
             true
         }
-        Key.controlStats -> {
-            tester.testConnection()
-            true
-        }
         Key.controlImport -> {
             startFilesForResult(replaceProfiles)
             true
@@ -204,10 +194,6 @@ class MainPreferenceFragment : LeanbackPreferenceFragmentCompat(), ShadowsocksCo
         }
         Key.about -> {
             Toast.makeText(requireContext(), "https://shadowsocks.org/android", Toast.LENGTH_SHORT).show()
-            true
-        }
-        Key.aboutOss -> {
-            // OSS Licenses functionality disabled for local app
             true
         }
         else -> super.onPreferenceTreeClick(preference)

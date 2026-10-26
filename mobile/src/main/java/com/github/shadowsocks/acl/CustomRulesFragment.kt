@@ -59,7 +59,6 @@ import kotlinx.parcelize.Parcelize
 import me.zhanghai.android.fastscroll.FastScrollerBuilder
 import timber.log.Timber
 import java.net.IDN
-import java.net.MalformedURLException
 import java.net.URL
 import java.util.regex.PatternSyntaxException
 
@@ -83,8 +82,7 @@ class CustomRulesFragment : ToolbarFragment(), Toolbar.OnMenuItemClickListener, 
 
     private enum class Template {
         Generic,
-        Domain,
-        Url;
+        Domain;
     }
     @Parcelize
     data class AclItem(val item: String = "", val isUrl: Boolean = false) : Parcelable {
@@ -113,7 +111,7 @@ class CustomRulesFragment : ToolbarFragment(), Toolbar.OnMenuItemClickListener, 
             editText.setText(arg?.item)
             when {
                 arg == null -> { }
-                arg.isUrl -> templateSelector.setSelection(Template.Url.ordinal)
+                arg.isUrl -> templateSelector.setSelection(Template.Generic.ordinal)
                 Subnet.fromString(arg.item) == null -> {
                     val match = domainPattern.find(arg.item)
                     if (match != null) {
@@ -162,14 +160,6 @@ class CustomRulesFragment : ToolbarFragment(), Toolbar.OnMenuItemClickListener, 
                     message = e.cause?.readableMessage ?: e.readableMessage
                     false
                 }
-                Template.Url -> try {
-                    val url = URL(value.toString())
-                    if ("http".equals(url.protocol, true)) message = getString(R.string.cleartext_http_warning)
-                    true
-                } catch (e: MalformedURLException) {
-                    message = e.readableMessage
-                    false
-                }
             }
             inputLayout.error = message
         }
@@ -181,7 +171,6 @@ class CustomRulesFragment : ToolbarFragment(), Toolbar.OnMenuItemClickListener, 
                         Template.Generic -> AclItem(text)
                         Template.Domain -> AclItem(IDN.toASCII(text, IDN.ALLOW_UNASSIGNED or IDN.USE_STD3_ASCII_RULES)
                                 .replace(".", "\\.").let { "(?:^|\\.)$it\$" })
-                        Template.Url -> AclItem(text, true)
                     }
                 }, arg.item)
             }

@@ -10,9 +10,8 @@
 > For official releases, please visit the original project repository.
 
 **Key Differences from Official Version:**
-- Removed Firebase Analytics and Crashlytics for enhanced privacy
-- Disabled OSS Licenses plugin to resolve build compatibility issues
-- Optimized for local development and personal use
+- Removed QR scanning, URL subscriptions, connection testing, remote ACL fetching, and Google analytics/OSS license integrations.
+- Release signing reads `storeFile`, `storePassword`, `keyAlias`, and `keyPassword` from a properties file. Set Gradle property `ssKeystoreProperties` or environment variable `SS_KEYSTORE_PROPERTIES`; otherwise it uses `~/.android-signing/shadowsocks-keystore.properties`. A missing file leaves release builds unsigned. Relative keystore paths are resolved beside the properties file.
 
 
 ### LOCAL BUILD INSTRUCTIONS

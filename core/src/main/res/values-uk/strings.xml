@@ -85,7 +85,7 @@
 
     <!-- status -->
     <string name="connecting">"Під'єднання…"</string>
-    <string name="vpn_connected">"Під'єднано. Торкніться, щоб перевірити з'єднання."</string>
+    <string name="vpn_connected">"Під'єднано"</string>
     <string name="not_connected">"Не під'єднано"</string>
 
     <!-- acl -->

@@ -115,7 +115,7 @@ Recibido: \t%4$s\t↓\t%2$s"</string>
 
     <!-- status -->
     <string name="connecting">"Conectando…"</string>
-    <string name="vpn_connected">"Conectado, presiona para verificar la conexión"</string>
+    <string name="vpn_connected">"Conectado"</string>
     <string name="not_connected">"No conectado"</string>
 
     <!-- acl -->

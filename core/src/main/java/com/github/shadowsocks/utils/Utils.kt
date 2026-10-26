@@ -33,21 +33,9 @@ import android.system.OsConstants
 import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.preference.Preference
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.FileDescriptor
-import java.net.HttpURLConnection
 import java.net.InetAddress
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 
 inline fun <T> Iterable<T>.forEachTry(action: (T) -> Unit) {
     var result: Exception? = null
@@ -84,18 +72,6 @@ fun String?.parseNumericAddress(): InetAddress? = Os.inet_pton(OsConstants.AF_IN
         ?: Os.inet_pton(OsConstants.AF_INET6, this)?.let {
             if (Build.VERSION.SDK_INT >= 29) it else parseNumericAddress.invoke(null, this) as InetAddress
         }
-
-suspend fun <T> HttpURLConnection.useCancellable(block: suspend HttpURLConnection.() -> T) = coroutineScope {
-    @OptIn(InternalCoroutinesApi::class)    // https://github.com/Kotlin/kotlinx.coroutines/issues/4117
-    coroutineContext.job.invokeOnCompletion(true) {
-        if (Build.VERSION.SDK_INT >= 26) disconnect() else GlobalScope.launch(Dispatchers.IO) { disconnect() }
-    }
-    try {
-        withContext(Dispatchers.IO) { block() }
-    } finally {
-        if (Build.VERSION.SDK_INT >= 26) disconnect() else GlobalScope.launch(Dispatchers.IO) { disconnect() }
-    }
-}
 
 fun parsePort(str: String?, default: Int, min: Int = 1025): Int {
     val value = str?.toIntOrNull() ?: default

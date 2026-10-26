@@ -71,7 +71,6 @@ object Key {
     const val controlImport = "control.import"
     const val controlExport = "control.export"
     const val about = "about"
-    const val aboutOss = "about.ossLicenses"
 }
 
 object Action {

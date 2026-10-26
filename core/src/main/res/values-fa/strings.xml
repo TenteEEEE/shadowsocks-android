@@ -113,7 +113,7 @@
 
     <!-- status -->
     <string name="connecting">"در حال اتصال…"</string>
-    <string name="vpn_connected">"وصل شد، برای بررسی اتصال ضربه (Tap) بزنید."</string>
+    <string name="vpn_connected">"وصل شد"</string>
     <string name="not_connected">"اتصال برقرار نیست!"</string>
 
     <!-- acl -->

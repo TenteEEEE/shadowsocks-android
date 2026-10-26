@@ -120,7 +120,7 @@ Reçu : \t\t\t%4$s\t↓\t%2$s"</string>
 
     <!-- status -->
     <string name="connecting">"Connexion…"</string>
-    <string name="vpn_connected">"Connecté, toucher pour vérifier la connexion"</string>
+    <string name="vpn_connected">"Connecté"</string>
     <string name="not_connected">"Non connecté"</string>
 
     <!-- acl -->

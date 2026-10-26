@@ -127,7 +127,7 @@
 
     <!-- status -->
     <string name="connecting">"接続中…"</string>
-    <string name="vpn_connected">"接続済み、タップして接続状況をチェック"</string>
+    <string name="vpn_connected">"接続済み"</string>
     <string name="not_connected">"未接続"</string>
 
     <!-- acl -->

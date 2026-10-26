@@ -48,7 +48,6 @@ import kotlinx.coroutines.*
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
-import java.net.URL
 
 /**
  * This object uses WeakMap to simulate the effects of multi-inheritance.
@@ -308,7 +307,6 @@ object BaseService {
 
         suspend fun preInit() { }
         suspend fun rawResolver(query: ByteArray) = DnsResolverCompat.resolveRawOnActiveNetwork(query)
-        suspend fun openConnection(url: URL) = url.openConnection()
 
         fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
             val data = data
@@ -349,7 +347,7 @@ object BaseService {
                     preInit()
                     if (profile.route == Acl.CUSTOM_RULES) try {
                         withContext(Dispatchers.IO) {
-                            Acl.customRules.flatten(10, this@Interface::openConnection).also {
+                            Acl.customRules.flatten().also {
                                 Acl.save(Acl.CUSTOM_RULES, it)
                             }
                         }

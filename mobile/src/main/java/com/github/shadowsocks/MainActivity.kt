@@ -137,7 +137,6 @@ class MainActivity : AppCompatActivity(), ShadowsocksConnection.Callback, OnPref
         snackbar = findViewById(R.id.snackbar)
         ViewCompat.setOnApplyWindowInsetsListener(snackbar, ListHolderListener)
         stats = findViewById(R.id.stats)
-        stats.setOnClickListener { if (state == BaseService.State.Connected) stats.testConnection() }
         drawer = findViewById(R.id.drawer)
         val drawerHandler = object : OnBackPressedCallback(drawer.isOpen), DrawerLayout.DrawerListener {
             override fun handleOnBackPressed() = drawer.closeDrawers()
@@ -222,10 +221,6 @@ class MainActivity : AppCompatActivity(), ShadowsocksConnection.Callback, OnPref
     override fun onKeyShortcut(keyCode: Int, event: KeyEvent) = when {
         keyCode == KeyEvent.KEYCODE_G && event.hasModifiers(KeyEvent.META_CTRL_ON) -> {
             toggle()
-            true
-        }
-        keyCode == KeyEvent.KEYCODE_T && event.hasModifiers(KeyEvent.META_CTRL_ON) -> {
-            stats.testConnection()
             true
         }
         else -> (supportFragmentManager.findFragmentById(R.id.fragment_holder) as ToolbarFragment).toolbar.menu.let {

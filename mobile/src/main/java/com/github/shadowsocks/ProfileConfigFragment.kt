@@ -154,17 +154,6 @@ class ProfileConfigFragment : PreferenceFragmentCompat(),
         udpFallback = findPreference(Key.udpFallback)!!
         DataStore.privateStore.registerChangeListener(this)
 
-        val profile = ProfileManager.getProfile(profileId) ?: Profile()
-        if (profile.subscription == Profile.SubscriptionStatus.Active) {
-            findPreference<Preference>(Key.name)!!.isEnabled = false
-            findPreference<Preference>(Key.host)!!.isEnabled = false
-            findPreference<Preference>(Key.password)!!.isEnabled = false
-            findPreference<Preference>(Key.method)!!.isEnabled = false
-            findPreference<Preference>(Key.remotePort)!!.isEnabled = false
-            plugin.isEnabled = false
-            pluginConfigure.isEnabled = false
-            udpFallback.isEnabled = false
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

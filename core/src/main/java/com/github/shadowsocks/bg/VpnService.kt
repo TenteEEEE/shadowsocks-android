@@ -47,7 +47,6 @@ import timber.log.Timber
 import java.io.File
 import java.io.FileDescriptor
 import java.io.IOException
-import java.net.URL
 import android.net.VpnService as BaseVpnService
 
 class VpnService : BaseVpnService(), BaseService.Interface {
@@ -145,7 +144,6 @@ class VpnService : BaseVpnService(), BaseService.Interface {
             // no need to listen for network here as this is only used for forwarding local DNS queries.
             // retries should be attempted by client.
             DnsResolverCompat.resolveRaw(underlyingNetwork ?: throw IOException("no network"), query)
-    override suspend fun openConnection(url: URL) = DefaultNetworkListener.get().openConnection(url)
 
     override suspend fun startProcesses() {
         worker = ProtectWorker().apply { start() }

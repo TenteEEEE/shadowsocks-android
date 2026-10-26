@@ -9,18 +9,33 @@ setupApp()
 android {
     namespace = "com.github.shadowsocks"
     defaultConfig.applicationId = "com.github.shadowsocks"
+
+    val keystorePropertiesPath = providers.gradleProperty("ssKeystoreProperties")
+        .orElse(providers.environmentVariable("SS_KEYSTORE_PROPERTIES"))
+        .orElse("${System.getProperty("user.home")}/.android-signing/shadowsocks-keystore.properties")
+        .get()
+    val keystorePropertiesFile = file(keystorePropertiesPath)
+    if (keystorePropertiesFile.isFile) {
+        val keystoreProperties = java.util.Properties().apply {
+            keystorePropertiesFile.inputStream().use { load(it) }
+        }
+        signingConfigs.create("release") {
+            val storePath = keystoreProperties.getProperty("storeFile")
+            storeFile = (if (File(storePath).isAbsolute) File(storePath)
+                else File(keystorePropertiesFile.parentFile, storePath))
+            storePassword = keystoreProperties.getProperty("storePassword")
+            keyAlias = keystoreProperties.getProperty("keyAlias")
+            keyPassword = keystoreProperties.getProperty("keyPassword")
+        }
+        buildTypes.getByName("release").signingConfig = signingConfigs.getByName("release")
+    }
 }
 
 dependencies {
     coreLibraryDesugaring(libs.desugar)
     implementation(libs.androidx.browser)
-    implementation(libs.androidx.camera.camera2)
-    implementation(libs.androidx.camera.lifecycle)
-    implementation(libs.androidx.camera.view)
-    implementation(libs.androidx.concurrent.futures.ktx)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.barcode.scanning)
     implementation(libs.fastscroll)
     implementation(libs.locale.api)
     implementation(libs.preferencex.simplemenu)

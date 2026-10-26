@@ -124,19 +124,13 @@ class ProfilesFragment : ToolbarFragment(), Toolbar.OnMenuItemClickListener, Sea
         private val text2 = itemView.findViewById<TextView>(android.R.id.text2)
         private val traffic = itemView.findViewById<TextView>(R.id.traffic)
         private val edit = itemView.findViewById<View>(R.id.edit)
-        private val subscription = itemView.findViewById<View>(R.id.subscription)
 
         init {
             edit.setOnClickListener {
                 item = ProfileManager.getProfile(item.id)!!
                 startConfig(item)
             }
-            subscription.setOnClickListener {
-                item = ProfileManager.getProfile(item.id) ?: return@setOnClickListener
-                startConfig(item)
-            }
             TooltipCompat.setTooltipText(edit, edit.contentDescription)
-            TooltipCompat.setTooltipText(subscription, subscription.contentDescription)
             itemView.setOnClickListener(this)
             val share = itemView.findViewById<View>(R.id.share)
             share.setOnClickListener {
@@ -153,8 +147,6 @@ class ProfilesFragment : ToolbarFragment(), Toolbar.OnMenuItemClickListener, Sea
             val editable = isProfileEditable(item.id)
             edit.isEnabled = editable
             edit.alpha = if (editable) 1F else .5F
-            subscription.isEnabled = editable
-            subscription.alpha = if (editable) 1F else .5F
             var tx = item.tx
             var rx = item.rx
             statsCache[item.id]?.apply {
@@ -179,13 +171,7 @@ class ProfilesFragment : ToolbarFragment(), Toolbar.OnMenuItemClickListener, Sea
                 if (selectedItem === this) selectedItem = null
             }
 
-            if (item.subscription == Profile.SubscriptionStatus.Active) {
-                edit.visibility = View.GONE
-                subscription.visibility = View.VISIBLE
-            } else {
-                edit.visibility = View.VISIBLE
-                subscription.visibility = View.GONE
-            }
+            edit.visibility = View.VISIBLE
         }
 
         override fun onClick(v: View?) {

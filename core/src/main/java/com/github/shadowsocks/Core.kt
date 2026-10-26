@@ -49,7 +49,6 @@ import com.github.shadowsocks.core.R
 import com.github.shadowsocks.database.Profile
 import com.github.shadowsocks.database.ProfileManager
 import com.github.shadowsocks.preference.DataStore
-import com.github.shadowsocks.subscription.SubscriptionService
 import com.github.shadowsocks.utils.Action
 import com.github.shadowsocks.utils.DeviceStorageApp
 import com.github.shadowsocks.utils.DirectBoot
@@ -152,7 +151,7 @@ object Core {
                             NotificationManager.IMPORTANCE_LOW),
                     NotificationChannel("service-transproxy", app.getText(R.string.service_transproxy),
                             NotificationManager.IMPORTANCE_LOW),
-                    SubscriptionService.notificationChannel))
+            ))
             notification.deleteNotificationChannel("service-nat")   // NAT mode is gone for good
         }
     }

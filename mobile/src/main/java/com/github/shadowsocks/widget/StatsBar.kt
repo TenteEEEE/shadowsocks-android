@@ -25,14 +25,11 @@ import android.text.format.Formatter
 import android.util.AttributeSet
 import android.view.View
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.appcompat.widget.TooltipCompat
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.doOnPreDraw
-import com.github.shadowsocks.MainActivity
 import com.github.shadowsocks.R
 import com.github.shadowsocks.bg.BaseService
-import com.github.shadowsocks.net.HttpsTest
 import com.google.android.material.bottomappbar.BottomAppBar
 
 class StatsBar @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null,
@@ -43,7 +40,6 @@ class StatsBar @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
     private lateinit var rxText: TextView
     private lateinit var txRateText: TextView
     private lateinit var rxRateText: TextView
-    private val tester by (context as MainActivity).viewModels<HttpsTest>()
     private lateinit var behavior: Behavior
     override fun getBehavior(): Behavior {
         if (!this::behavior.isInitialized) behavior = object : Behavior() {
@@ -72,15 +68,12 @@ class StatsBar @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
     }
 
     fun changeState(state: BaseService.State, animate: Boolean) {
-        val activity = context as MainActivity
         if ((state == BaseService.State.Connected).also { hideOnScroll = it }) {
             doOnPreDraw { performShow(animate) }
-            tester.status.observe(activity) { it.retrieve(this::setStatus) { msg -> activity.snackbar(msg).show() } }
+            setStatus(context.getText(R.string.vpn_connected))
         } else {
             doOnPreDraw { performHide(animate) }
             updateTraffic(0, 0, 0, 0)
-            tester.status.removeObservers(activity)
-            if (state != BaseService.State.Idle) tester.invalidate()
             setStatus(context.getText(when (state) {
                 BaseService.State.Connecting -> R.string.connecting
                 BaseService.State.Stopping -> R.string.stopping
@@ -96,5 +89,4 @@ class StatsBar @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
         rxRateText.text = context.getString(R.string.speed, Formatter.formatFileSize(context, rxRate))
     }
 
-    fun testConnection() = tester.testConnection()
 }
